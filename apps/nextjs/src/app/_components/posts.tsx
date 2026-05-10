@@ -7,19 +7,19 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 
-import type { RouterOutputs } from "@acme/api";
-import { CreatePostSchema } from "@acme/db/schema";
-import { cn } from "@acme/ui";
-import { Button } from "@acme/ui/button";
+import type { RouterOutputs } from "@memory-map/api";
+import { CreatePostSchema } from "@memory-map/db/schema";
+import { cn } from "@memory-map/ui";
+import { Button } from "@memory-map/ui/button";
 import {
   Field,
   FieldContent,
   FieldError,
   FieldGroup,
   FieldLabel,
-} from "@acme/ui/field";
-import { Input } from "@acme/ui/input";
-import { toast } from "@acme/ui/toast";
+} from "@memory-map/ui/field";
+import { Input } from "@memory-map/ui/input";
+import { toast } from "@memory-map/ui/toast";
 
 import { useTRPC } from "~/trpc/react";
 
