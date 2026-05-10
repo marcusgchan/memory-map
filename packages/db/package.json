@@ -14,6 +14,10 @@
     "./schema": {
       "types": "./dist/schema.d.ts",
       "default": "./src/schema.ts"
+    },
+    "./env": {
+      "types": "./dist/env.d.ts",
+      "default": "./src/env.ts"
     }
   },
   "license": "MIT",
@@ -29,15 +33,17 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@vercel/postgres": "^0.10.0",
+    "@t3-oss/env-core": "catalog:t3-env",
     "drizzle-orm": "^0.44.7",
     "drizzle-zod": "^0.8.3",
+    "postgres": "^3.4.9",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@memory-map/eslint-config": "workspace:*",
     "@memory-map/prettier-config": "workspace:*",
     "@memory-map/tsconfig": "workspace:*",
+    "@types/node": "catalog:",
     "drizzle-kit": "^0.31.5",
     "eslint": "catalog:",
     "prettier": "catalog:",
