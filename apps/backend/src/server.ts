@@ -1,7 +1,7 @@
 import { serve } from "@hono/node-server";
+import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { appRouter, createTRPCContext } from "@memory-map/api";
 import { initAuth } from "@memory-map/auth";

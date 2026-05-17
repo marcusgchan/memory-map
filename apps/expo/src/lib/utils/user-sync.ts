@@ -1,5 +1,6 @@
-import { usersCollection } from "../memories/user.collection";
 import type { Session } from "@memory-map/auth";
+
+import { usersCollection } from "../memories/user.collection";
 
 export async function syncLocalUser(session: Session) {
   if (!session?.user) return;

@@ -30,7 +30,9 @@ const LocalUserContext = createContext<LocalUserContextValue>({
   isLoading: true,
 });
 
-let _setLocalUser: React.Dispatch<React.SetStateAction<LocalUserContextValue>> | null = null;
+let _setLocalUser: React.Dispatch<
+  React.SetStateAction<LocalUserContextValue>
+> | null = null;
 
 export function setLocalUser(id: string) {
   void SecureStore.setItemAsync(LOCAL_USERID_KEY, id);
