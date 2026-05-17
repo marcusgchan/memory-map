@@ -1,7 +1,5 @@
 import { sql } from "drizzle-orm";
 import {
-  bigint,
-  bigserial,
   boolean,
   date,
   doublePrecision,
@@ -14,7 +12,7 @@ import {
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
+import { createInsertSchema, createSelectSchema } from "drizzle-orm/zod";
 import { z } from "zod/v4";
 
 export const pgTable = pgTableCreator((name) => `${name}`);
@@ -56,6 +54,8 @@ export const users = pgTable("users", {
     .notNull(),
 });
 
+export const usersSchema = createSelectSchema(users);
+
 export type Users = typeof users.$inferSelect;
 
 export const accounts = pgTable("accounts", {
@@ -76,6 +76,8 @@ export const accounts = pgTable("accounts", {
   updatedAt: timestamp("updated_at").notNull(),
 });
 
+export const accountsSchema = createSelectSchema(accounts);
+
 export const sessions = pgTable("sessions", {
   id: text("id").primaryKey(),
   expiresAt: timestamp("expires_at").notNull(),
@@ -88,6 +90,8 @@ export const sessions = pgTable("sessions", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
 });
+
+export const sessionsSchema = createSelectSchema(sessions);
 
 export const verifications = pgTable("verifications", {
   id: text("id").primaryKey(),
@@ -102,13 +106,15 @@ export const verifications = pgTable("verifications", {
   ),
 });
 
+export const verificationsSchema = createSelectSchema(verifications);
+
 export const diariesToUsers = pgTable(
   "diaries_to_users",
   {
     userId: text("user_id")
       .notNull()
       .references(() => users.id),
-    diaryId: bigserial("diary_id", { mode: "number" })
+    diaryId: text("diary_id")
       .notNull()
       .references(() => diaries.id),
   },
@@ -117,17 +123,20 @@ export const diariesToUsers = pgTable(
   },
 );
 
+export const diariesToUsersSchema = createSelectSchema(diariesToUsers);
+
 export const diaries = pgTable("diaries", {
-  id: bigserial("id", { mode: "number" }).primaryKey(),
+  id: text("id").primaryKey(),
   name: text("name").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
+export const diariesSchema = createSelectSchema(diaries);
 export type Diaries = typeof diaries.$inferSelect;
 
 export const entries = pgTable("entries", {
-  id: bigserial("id", { mode: "number" }).primaryKey(),
-  diaryId: bigint("diary_id", { mode: "number" })
+  id: text("id").primaryKey(),
+  diaryId: text("diary_id")
     .notNull()
     .references(() => diaries.id),
   day: date("day", { mode: "string" }).notNull(),
@@ -135,6 +144,8 @@ export const entries = pgTable("entries", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
+
+export const entriesSchema = createSelectSchema(entries);
 
 export type Entries = typeof entries.$inferSelect;
 
@@ -158,6 +169,8 @@ export const fileUpload = pgTable("file_uploads", {
   uploadAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+export const fileUploadSchema = createSelectSchema(fileUpload);
+
 export type FileUpload = typeof fileUpload.$inferSelect;
 
 export const genericImage = pgTable("generic_images", {
@@ -170,6 +183,7 @@ export const genericImage = pgTable("generic_images", {
     .$type<"success" | "failure">()
     .notNull(),
 });
+export const genericImageSchema = createSelectSchema(genericImage);
 // new
 
 export const imageKeys = pgTable("image_keys", {
@@ -192,6 +206,8 @@ export const imageKeys = pgTable("image_keys", {
   uploadAt: timestamp("created_at").notNull().defaultNow(),
 });
 
+export const imageKeysSchema = createSelectSchema(imageKeys);
+
 export type ImageKeys = typeof imageKeys.$inferSelect;
 
 export const geoData = pgTable("geo_data", {
@@ -202,15 +218,18 @@ export const geoData = pgTable("geo_data", {
   lat: doublePrecision("lat").notNull(),
 });
 
+export const geoDataSchema = createSelectSchema(geoData);
+
 export const posts = pgTable("posts", {
   id: uuid("id").primaryKey().defaultRandom(),
-  entryId: bigint("entry_id", { mode: "number" })
+  entryId: text("entry_id")
     .notNull()
     .references(() => entries.id),
   title: varchar("title", { length: 255 }).notNull(),
   description: varchar("description", { length: 2048 }).notNull(),
   order: integer("order").notNull(),
 });
+export const postsSchema = createSelectSchema(posts);
 export type Posts = typeof posts.$inferSelect;
 
 export const postLocations = pgTable("post_locations", {
@@ -221,6 +240,7 @@ export const postLocations = pgTable("post_locations", {
   longitude: doublePrecision("longitude").notNull(),
   latitude: doublePrecision("latitude").notNull(),
 });
+export const postLocationsSchema = createSelectSchema(postLocations);
 export type PostLocations = typeof postLocations.$inferSelect;
 
 export const postImages = pgTable("post_images", {
@@ -233,6 +253,8 @@ export const postImages = pgTable("post_images", {
     .references(() => imageKeys.key),
   order: integer("order").notNull(),
 });
+
+export const postImagesSchema = createSelectSchema(postImages);
 
 // export const editorStates = pgTable("editor_states", {
 //   data: json("editor_state").$type<

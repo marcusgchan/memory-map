@@ -47,11 +47,18 @@
   },
   "globalEnv": [
     "DATABASE_URL",
+    "DATABASE_HOST",
+    "DATABASE_PORT",
+    "DATABASE_USER",
+    "DATABASE_NAME",
     "AUTH_DISCORD_ID",
     "AUTH_DISCORD_SECRET",
     "AUTH_REDIRECT_PROXY_URL",
     "AUTH_SECRET",
-    "PORT"
+    "PORT",
+    "CORS_ORIGIN",
+    "API_URL",
+    "PRODUCTION_URL"
   ],
   "globalPassThroughEnv": [
     "NODE_ENV",

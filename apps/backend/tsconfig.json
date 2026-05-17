@@ -1,0 +1,11 @@
+{
+  "extends": "@memory-map/tsconfig/base.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
+}

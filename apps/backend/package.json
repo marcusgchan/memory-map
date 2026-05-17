@@ -1,51 +1,41 @@
 {
-  "name": "@memory-map/db",
+  "name": "@memory-map/backend",
   "private": true,
   "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./src/index.ts"
-    },
-    "./client": {
-      "types": "./dist/client.d.ts",
-      "default": "./src/client.ts"
-    },
-    "./schema": {
-      "types": "./dist/schema.d.ts",
-      "default": "./src/schema.ts"
-    },
-    "./env": {
-      "types": "./dist/env.d.ts",
-      "default": "./src/env.ts"
     }
   },
   "license": "MIT",
   "scripts": {
     "build": "tsc",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "dev": "tsc",
+    "dev": "pnpm with-env tsx watch src/server.ts",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint --flag unstable_native_nodejs_ts_config",
-    "push": "pnpm with-env drizzle-kit push",
-    "studio": "pnpm with-env drizzle-kit studio",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
+    "@hono/node-server": "^1.14.0",
+    "@memory-map/api": "workspace:*",
+    "@memory-map/auth": "workspace:*",
+    "@memory-map/db": "workspace:*",
     "@t3-oss/env-core": "catalog:t3-env",
-    "drizzle-orm": "1.0.0-beta.22",
-    "postgres": "^3.4.9",
+    "@trpc/server": "catalog:",
+    "hono": "^4.7.0",
+    "superjson": "2.2.3",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@memory-map/eslint-config": "workspace:*",
     "@memory-map/prettier-config": "workspace:*",
     "@memory-map/tsconfig": "workspace:*",
-    "@types/node": "catalog:",
-    "drizzle-kit": "1.0.0-beta.22",
     "eslint": "catalog:",
     "prettier": "catalog:",
+    "tsx": "^4.19.0",
     "typescript": "catalog:"
   },
   "prettier": "@memory-map/prettier-config"
