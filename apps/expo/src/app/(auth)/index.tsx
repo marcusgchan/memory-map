@@ -30,10 +30,11 @@ export default function SignIn() {
             provider: "discord",
             callbackURL: "/signin",
           });
-          // if (error) {
-          //   setShowError(true);
-          //   return;
-          // }
+          console.log("pressed");
+          if (error) {
+            setShowError(true);
+            return;
+          }
         }}
       >
         <Text style={styles.buttonText}>Sign in with Discord</Text>

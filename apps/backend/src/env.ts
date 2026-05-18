@@ -12,7 +12,7 @@ export const env = createEnv({
       .default("development"),
   },
   server: {
-    PORT: z.coerce.number().default(3002),
+    PORT: z.coerce.number(),
     CORS_ORIGIN: z.string().optional(),
     API_URL: z.url().optional(),
     PRODUCTION_URL: z.url().optional(),
