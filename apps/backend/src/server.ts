@@ -17,7 +17,9 @@ import { env } from "./env";
 // });
 
 const app = new Hono();
+console.log("custom", env);
 
+console.log("default", process.env);
 app.use(
   "/api/*",
   cors({
