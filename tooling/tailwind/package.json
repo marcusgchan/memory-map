@@ -24,6 +24,7 @@
     "@memory-map/tsconfig": "workspace:*",
     "@types/node": "catalog:",
     "eslint": "catalog:",
+    "jiti": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },

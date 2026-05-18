@@ -1,14 +1,9 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import type { ReactNode } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import * as SplashScreen from "expo-splash-screen";
 
-SplashScreen.preventAutoHideAsync();
+void SplashScreen.preventAutoHideAsync();
 
 export type LocalUserContextValue =
   | { isLoading: true }
@@ -64,7 +59,7 @@ export function LocalUserContextProvider({
         console.error(err);
       })
       .finally(() => {
-        SplashScreen.hideAsync();
+        void SplashScreen.hideAsync();
       });
     return () => {
       _setLocalUser = null;

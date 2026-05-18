@@ -34,6 +34,7 @@
     "@memory-map/tsconfig": "workspace:*",
     "@types/react": "catalog:react19",
     "eslint": "catalog:",
+    "jiti": "catalog:",
     "prettier": "catalog:",
     "react": "catalog:react19",
     "typescript": "catalog:",

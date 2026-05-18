@@ -16,8 +16,8 @@ export default function SignIn() {
   useEffect(() => {
     if (session?.user) {
       setLocalUser(session.user.id);
-      syncLocalUser(session);
-      router.replace("/memories");
+      void syncLocalUser(session);
+      router.replace("/");
     }
   }, [session]);
 

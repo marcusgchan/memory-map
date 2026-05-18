@@ -29,6 +29,7 @@
     "@memory-map/prettier-config": "workspace:*",
     "@memory-map/tsconfig": "workspace:*",
     "eslint": "catalog:",
+    "jiti": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
   },
