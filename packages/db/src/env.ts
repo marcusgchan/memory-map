@@ -5,7 +5,7 @@ export function dbEnv() {
   return createEnv({
     server: {
       DATABASE_HOST: z.string(),
-      DATABASE_PORT: z.number(),
+      DATABASE_PORT: z.coerce.number().positive(),
       DATABASE_USER: z.string(),
       DATABASE_NAME: z.string(),
       DATABASE_URL: z.url(),
