@@ -10,8 +10,8 @@ export const memoryToUserCollection = createCollection(
     database: db,
     table: APP_SCHEMA.props.diaries_to_users,
     schema: memoryToUserSchema,
-    onDeserializationError: (error) => {
-      console.error(error);
+    onDeserializationError: () => {
+      // console.error(error);
     },
   }),
 );

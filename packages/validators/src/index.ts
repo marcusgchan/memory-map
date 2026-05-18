@@ -15,8 +15,9 @@ export const memorySchema = z.object({
 });
 
 export const memoryToUserSchema = z.object({
+  id: z.string(),
   user_id: z.string(),
-  memory_id: z.string(),
+  diary_id: z.string(),
 });
 
 export const userSchema = z.object({
