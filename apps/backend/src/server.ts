@@ -8,13 +8,13 @@ import { initAuth } from "@memory-map/auth";
 
 import { env } from "./env";
 
-const auth = initAuth({
-  baseUrl: env.API_URL ?? `http://localhost:${env.PORT}`,
-  productionUrl: env.PRODUCTION_URL ?? `http://localhost:${env.PORT}`,
-  secret: env.AUTH_SECRET,
-  discordClientId: env.AUTH_DISCORD_ID,
-  discordClientSecret: env.AUTH_DISCORD_SECRET,
-});
+// const auth = initAuth({
+//   baseUrl: env.API_URL ?? `http://localhost:${env.PORT}`,
+//   productionUrl: env.PRODUCTION_URL ?? `http://localhost:${env.PORT}`,
+//   secret: env.AUTH_SECRET,
+//   discordClientId: env.AUTH_DISCORD_ID,
+//   discordClientSecret: env.AUTH_DISCORD_SECRET,
+// });
 
 const app = new Hono();
 
@@ -26,20 +26,22 @@ app.use(
   }),
 );
 
-app.all("/api/auth/{*}", (c) => auth.handler(c.req.raw));
+app.get("/health", (c) => c.text("No content"));
 
-app.all("/api/trpc/{*}", (c) =>
-  fetchRequestHandler({
-    endpoint: "/api/trpc",
-    router: appRouter,
-    req: c.req.raw,
-    createContext: () =>
-      createTRPCContext({ auth, headers: c.req.raw.headers }),
-    onError({ error, path }) {
-      console.error(`tRPC Error on '${path}'`, error);
-    },
-  }),
-);
+// app.all("/api/auth/{*}", (c) => auth.handler(c.req.raw));
+
+// app.all("/api/trpc/{*}", (c) =>
+//   fetchRequestHandler({
+//     endpoint: "/api/trpc",
+//     router: appRouter,
+//     req: c.req.raw,
+//     createContext: () =>
+//       createTRPCContext({ auth, headers: c.req.raw.headers }),
+//     onError({ error, path }) {
+//       console.error(`tRPC Error on '${path}'`, error);
+//     },
+//   }),
+// );
 
 serve({ fetch: app.fetch, port: env.PORT }, (info) => {
   console.log(`API server running on http://localhost:${info.port}`);
