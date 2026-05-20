@@ -26,12 +26,13 @@ export default function SignIn() {
       <Pressable
         style={styles.button}
         onPress={async () => {
-          const { error } = await authClient.signIn.social({
+          const { error, data } = await authClient.signIn.social({
             provider: "discord",
             callbackURL: "/signin",
           });
           console.log("pressed");
           if (error) {
+            console.log(error, data);
             setShowError(true);
             return;
           }

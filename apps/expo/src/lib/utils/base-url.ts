@@ -16,11 +16,30 @@ export const getBaseUrl = () => {
   const debuggerHost = Constants.expoConfig?.hostUri;
   const localhost = debuggerHost?.split(":")[0];
 
+  console.log("[DEBUG] expoConfig.hostUri:", debuggerHost);
+  console.log("[DEBUG] resolved localhost:", localhost);
+
   if (!localhost) {
     // return "https://turbo.t3.gg";
     throw new Error(
       "Failed to get localhost. Please point to your production server.",
     );
   }
-  return `http://${localhost}:3000`;
+
+  const url = `http://${localhost}:3000`;
+  console.log("[DEBUG] getBaseUrl:", url);
+
+  fetch(`${url}/api/auth/get-session`)
+    .then((r) => console.log("[DEBUG] GET reachability:", r.status))
+    .catch((e) => console.log("[DEBUG] GET reachability FAILED:", e.message));
+
+  fetch(`${url}/api/auth/sign-in/social`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ provider: "discord", callbackURL: "/signin" }),
+  })
+    .then((r) => r.text().then((t) => console.log("[DEBUG] POST sign-in:", r.status, t)))
+    .catch((e) => console.log("[DEBUG] POST sign-in FAILED:", e.message));
+
+  return url;
 };

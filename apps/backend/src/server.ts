@@ -30,9 +30,9 @@ app.use(
 
 app.get("/health", (c) => c.text("No content"));
 
-app.all("/api/auth/{*}", (c) => auth.handler(c.req.raw));
+app.on(["POST", "GET"], "/api/auth/*", (c) => auth.handler(c.req.raw));
 
-app.all("/api/trpc/{*}", (c) =>
+app.all("/api/trpc/*", (c) =>
   fetchRequestHandler({
     endpoint: "/api/trpc",
     router: appRouter,
