@@ -7,12 +7,13 @@ import {
   useLocalUser,
 } from "~/lib/auth/LocalUserContextProvider";
 import { authClient } from "~/lib/utils/auth";
+import { getBaseUrl } from "~/lib/utils/base-url";
 import { syncLocalUser } from "~/lib/utils/user-sync";
 
 export default function SignIn() {
   const { data: session } = authClient.useSession();
   const [showError, setShowError] = useState(false);
-  console.log("test");
+  console.log("session", session);
   useEffect(() => {
     if (session?.user) {
       setLocalUser(session.user.id);
@@ -26,16 +27,27 @@ export default function SignIn() {
       <Pressable
         style={styles.button}
         onPress={async () => {
+          console.log("before");
+          // const d = await fetch(`${getBaseUrl()}/api/auth/sign-in/social`, {
+          //   method: "POST",
+          //   headers: { "Content-Type": "application/json" },
+          //   body: JSON.stringify({
+          //     provider: "discord",
+          //     callbackURL: "/signin",
+          //   }),
+          // });
+
           const { error, data } = await authClient.signIn.social({
             provider: "discord",
             callbackURL: "/signin",
           });
-          console.log("pressed");
           if (error) {
+            console.log("error");
             console.log(error, data);
             setShowError(true);
             return;
           }
+          console.log("no error");
         }}
       >
         <Text style={styles.buttonText}>Sign in with Discord</Text>

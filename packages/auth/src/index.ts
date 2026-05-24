@@ -6,6 +6,8 @@ import { oAuthProxy } from "better-auth/plugins";
 
 import { db } from "@memory-map/db/client";
 
+import { env } from "./env";
+
 export function initAuth<
   TExtraPlugins extends BetterAuthPlugin[] = [],
 >(options: {
@@ -37,7 +39,17 @@ export function initAuth<
         redirectURI: `${options.productionUrl}/api/auth/callback/discord`,
       },
     },
-    trustedOrigins: ["expo://"],
+    trustedOrigins: [
+      "expo://",
+      // Development mode - Expo's exp:// scheme with local IP ranges
+      ...(env.NODE_ENV === "development"
+        ? [
+            "exp://", // Trust all Expo URLs (prefix matching)
+            "exp://**", // Trust all Expo URLs (wildcard matching)
+            "exp://192.168.*.*:*/**", // Trust 192.168.x.x IP range with any port and path
+          ]
+        : []),
+    ],
     onAPIError: {
       onError(error, ctx) {
         console.error("BETTER AUTH API ERROR", error, ctx);

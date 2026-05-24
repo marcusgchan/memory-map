@@ -14,7 +14,8 @@ COPY --from=prepare /app/out/json .
 RUN pnpm i --frozen-lockfile
 COPY --from=prepare /app/out/full .
 
-FROM node:22-alpine AS runner
+# FROM node:22-alpine AS runner
+FROM base AS runner
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 backend
 USER backend
@@ -26,5 +27,5 @@ COPY --from=builder --chown=backend:nodejs /app/node_modules node_modules
 COPY --from=builder --chown=backend:nodejs /app/pnpm-workspace.yaml pnpm-workspace.yaml
 
 WORKDIR /app/apps/backend
-EXPOSE 3002
+EXPOSE 3000
 CMD ["npx", "tsx", "src/server.ts"]
