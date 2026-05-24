@@ -16,15 +16,20 @@ COPY --from=prepare /app/out/full .
 
 # FROM node:22-alpine AS runner
 FROM base AS runner
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 backend
+# RUN addgroup --system --gid 1001 nodejs
+# RUN adduser --system --uid 1001 backend
 USER backend
 WORKDIR /app
 
-COPY --from=builder --chown=backend:nodejs /app/apps/backend apps/backend
-COPY --from=builder --chown=backend:nodejs /app/packages packages
-COPY --from=builder --chown=backend:nodejs /app/node_modules node_modules
-COPY --from=builder --chown=backend:nodejs /app/pnpm-workspace.yaml pnpm-workspace.yaml
+# COPY --from=builder --chown=backend:nodejs /app/apps/backend apps/backend
+# COPY --from=builder --chown=backend:nodejs /app/packages packages
+# COPY --from=builder --chown=backend:nodejs /app/node_modules node_modules
+# COPY --from=builder --chown=backend:nodejs /app/pnpm-workspace.yaml pnpm-workspace.yaml
+
+COPY --from=builder /app/apps/backend apps/backend
+COPY --from=builder /app/packages packages
+COPY --from=builder /app/node_modules node_modules
+COPY --from=builder /app/pnpm-workspace.yaml pnpm-workspace.yaml
 
 WORKDIR /app/apps/backend
 EXPOSE 3000
