@@ -42,14 +42,11 @@ export function initAuth<
     trustedOrigins: [
       "https://memory-map-api.marcuschan.ca",
       "expo://",
-      // Development mode - Expo's exp:// scheme with local IP ranges
-      ...(env.NODE_ENV === "development"
-        ? [
-            "exp://", // Trust all Expo URLs (prefix matching)
-            "exp://**", // Trust all Expo URLs (wildcard matching)
-            "exp://192.168.*.*:*/**", // Trust 192.168.x.x IP range with any port and path
-          ]
-        : []),
+      "exp://",
+      "exp://**",
+      "exp://192.168.*.*:*/**",
+      "http://192.168.*.*:3000",
+      "http://localhost:3000",
     ],
     onAPIError: {
       onError(error, ctx) {
