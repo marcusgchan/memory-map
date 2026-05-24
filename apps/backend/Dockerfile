@@ -18,7 +18,7 @@ COPY --from=prepare /app/out/full .
 FROM base AS runner
 # RUN addgroup --system --gid 1001 nodejs
 # RUN adduser --system --uid 1001 backend
-USER backend
+# USER backend
 WORKDIR /app
 
 # COPY --from=builder --chown=backend:nodejs /app/apps/backend apps/backend
