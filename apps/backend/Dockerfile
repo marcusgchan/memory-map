@@ -30,6 +30,7 @@ COPY --from=builder /app/apps/backend apps/backend
 COPY --from=builder /app/packages packages
 COPY --from=builder /app/node_modules node_modules
 COPY --from=builder /app/pnpm-workspace.yaml pnpm-workspace.yaml
+COPY --from=builder /app/tooling tooling
 
 WORKDIR /app/apps/backend
 EXPOSE 3000
