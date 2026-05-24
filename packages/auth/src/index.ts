@@ -40,6 +40,7 @@ export function initAuth<
       },
     },
     trustedOrigins: [
+      "https://memory-map-api.marcuschan.ca",
       "expo://",
       // Development mode - Expo's exp:// scheme with local IP ranges
       ...(env.NODE_ENV === "development"
